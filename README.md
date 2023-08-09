@@ -14,3 +14,20 @@ This tool depends on Padloc (ref) and Samtools (ref). We recommend installation 
     - # Download the extractGenes files
     wget https://github.com/ohlab/SMEG/archive/1.1.1.tar.gz
     tar xvf 1.1.1.tar.gz
+    cd SMEG-1.1.1/test
+
+## USAGE
+    #################################################
+    ##   RETRIEVAL OF UNCHARACTERIZED GENES BETWEEN #
+    ##   KNOWN DEFENSE GENES                        #
+    #################################################
+    Usage:
+        extractGenes -v                     Version
+        extractGenes -h                     Display this help message
+        extractGenes -i                     Input genomes directory
+        extractGenes -l                     File listing a subset of genomes for analysis
+                                            [default = use all genomes in 'Genomes directory']
+        extractGenes -t  INT                Number of threads [default 8]
+        extractGenes -o                     Output directory
+        extractGenes -m  INT                Minimum size (bp) seperating 2 defense genes for analysis [default 1000]
+        extractGenes -x  INT                Maximum size (bp) seperating 2 defense genes for analysis [default 15000]
