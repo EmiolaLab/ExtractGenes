@@ -32,7 +32,7 @@ This tool depends on PADLOC (https://github.com/padlocbio/padloc) and Samtools. 
         extractGenes -m  INT                Minimum size (bp) seperating 2 defense genes for analysis [default 1000]
         extractGenes -x  INT                Maximum size (bp) seperating 2 defense genes for analysis [default 15000]
 
-We use PADLOC to identify known anti-phage proteins. By default, if two defense proteins are separated by 1,000 – 15,000 bp, our tool will retrieve all proteins located between both proteins. However, this range can be modified using the `-m` and `-x` flag. For basic usage, simply run `extractGenes -i [genomes_directory] `. 
+We use PADLOC to identify known anti-phage proteins. By default, if two defense proteins are separated by 1,000 – 15,000 bp, our tool will retrieve all uncharacterized proteins in this region. However, this range can be modified using the `-m` and `-x` flag. For basic usage, simply run `extractGenes -i [genomes_directory] `. 
 Note: Genomes must be in fasta format and must have either .fasta, .fa or .fna extensions.
 
 ## OUTPUT
@@ -40,6 +40,6 @@ Eight output files are generated, 5 of which are the output from PADLOC. The mai
 `ExtractedGenes_[genome_name].txt`
 `ExtractedGenes_[genome_name].faa`
 
-ExtractedGenes_[genome_name].txt contains 4 columns: (a) Name of candidate regions, (b) left-flanking known defense protein, (c) right-flanking known defense protein, and (d) gene IDs of extracted proteins.
+ExtractedGenes_[genome_name].txt contains 4 columns: (a) Name of candidate region, (b) left-flanking known defense protein, (c) right-flanking known defense protein, and (d) gene IDs of extracted proteins (separated by semicolon).
 
 ExtractedGenes_[genome_name].faa contains the extracted protein sequences. The protein headers also contain the names of flanking defense proteins. For example `>cbass_type_IIs|gabija|protein_1` means protein_1 is located between CBASS and Gabija defense systems.
