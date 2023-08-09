@@ -12,9 +12,13 @@ This tool depends on PADLOC (https://github.com/padlocbio/padloc) and Samtools. 
     padloc --db-update
 
     - # Download the extractGenes files
-    wget https://github.com/ohlab/SMEG/archive/1.1.1.tar.gz
-    tar xvf 1.1.1.tar.gz
-    cd SMEG-1.1.1/test
+    wget https://github.com/EmiolaLab/ExtractGenes/archive/1.0.tar.gz
+    tar xvf 1.0.tar.gz
+    cd ExtractGenes-1.0
+
+    - # Add to PATH
+    echo "export PATH=$PATH:/path/to/ExtractGenes-1.0" >> ~/.bashrc   
+    source ~/.bashrc
 
 ## USAGE
     #################################################
