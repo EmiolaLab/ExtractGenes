@@ -16,6 +16,7 @@ This tool depends on PADLOC (https://github.com/padlocbio/padloc) and Samtools. 
     wget https://github.com/EmiolaLab/ExtractGenes/archive/1.0.tar.gz
     tar xvf 1.0.tar.gz
     cd ExtractGenes-1.0
+    chmod +x extractGenes pipeline.sh
 
     - # Add to PATH
     echo "export PATH=$PATH:/path/to/ExtractGenes-1.0" >> ~/.bashrc   
