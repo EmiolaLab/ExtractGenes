@@ -1,0 +1,162 @@
+#!/bin/bash
+
+package=""  # Default to empty package
+CODE_DIR="$( cd "$( dirname "$(readlink -f ${BASH_SOURCE[0]})" )" && pwd )"
+WDR=$(pwd)
+
+LIST=false
+NUM_THREAD=8
+MIN=1000
+MAX=15000
+INT='^[0-9]+$'
+FLOAT='^[0-9]+([.][0-9]+)?$'
+
+while getopts ":i:l:t:o:m:x:hv" opt; do
+  case ${opt} in
+ 	i )
+          INPUT_DIR=$OPTARG
+          ;;
+        m )
+          MIN=$OPTARG
+          ;;
+        o )
+          OUTPUT_DIR=$OPTARG
+          ;;
+        x )
+          MAX=$OPTARG
+          ;;
+        l )
+          LIST=$OPTARG
+          ;;
+	t )
+          NUM_THREAD=$OPTARG
+          ;;
+    h )
+      echo "#################################################"
+      echo "##   RETRIEVAL OF UNCHARACTERIZED GENES BETWEEN #"
+      echo "##   KNOWN DEFENSE GENES                        #"
+      echo "#################################################"
+      echo "Usage:"
+      echo "    extractGenes -v                     Version"
+      echo "    extractGenes -h                     Display this help message"
+      echo "    extractGenes -i                     Input genomes directory"
+      echo "    extractGenes -l                     File listing a subset of genomes for analysis"
+      echo "                		            [default = use all genomes in 'Genomes directory']"
+      echo "    extractGenes -t  INT                Number of threads [default 8]"
+      echo "    extractGenes -o                     Output direectory"
+      echo "    extractGenes -m  INT                Minimum size (bp) seperating 2 defense genes for analysis [default 1000]"
+      echo "    extractGenes -x  INT                Maximum size (bp) seperating 2 defense genes for analysis [default 15000]"
+      exit 0
+      ;;
+    v )
+      echo "extractGenes v1.0" 
+      exit 0
+      ;;
+   \? )
+     echo "Invalid Option: -$OPTARG" 1>&2
+     exit 1
+     ;;
+    : )
+     echo "Invalid Option: -$OPTARG requires an argument" 1>&2
+     exit 1
+     ;;
+   *  ) 
+     echo "Unimplemented option: -$OPTARG" >&2
+     exit 1
+          ;;
+  esac
+done
+###########################################################################
+if [ $# -eq 0 ];
+then
+      echo "#################################################"
+      echo "##   RETRIEVAL OF UNCHARACTERIZED GENES BETWEEN #"
+      echo "##   KNOWN DEFENSE GENES                        #"
+      echo "#################################################"
+      echo "Usage:"
+      echo "    extractGenes -v                     Version"
+      echo "    extractGenes -h                     Display this help message"
+      echo "    extractGenes -i                     Input genomes directory"
+      echo "    extractGenes -l                     File listing a subset of genomes for analysis"
+      echo "                		            [default = use all genomes in 'Genomes directory']"
+      echo "    extractGenes -t  INT                Number of threads [default 8]"
+      echo "    extractGenes -o                     Output direectory"
+      echo "    extractGenes -m  INT                Minimum size (bp) seperating 2 defense genes for analysis [default 1000]"
+      echo "    extractGenes -x  INT                Maximum size (bp) seperating 2 defense genes for analysis [default 15000]"
+    exit 1
+fi
+##########################################################################
+
+
+
+if [ "x" == "x$INPUT_DIR" ]; then
+  echo "-i [option] is required"
+  exit 1
+fi
+if ! [[ $NUM_THREAD =~ $INT ]] && [[ $NUM_THREAD != 1 ]] ; then
+    echo "-t [option] requires an integer"
+    exit 1
+fi
+if [ "$LIST" != "false" ]; then
+LIS=$(readlink -f $LIST)
+fi
+if [ "x" == "x$OUTPUT_DIR" ]; then
+ directory=$(echo "ExtractGenes_output_$(date +%s)") 
+ mkdir $WDR/$directory
+ OUTPUT_DIR=$WDR/$directory 
+fi
+if ! [[ $MIN =~ $INT ]] || [[ $MIN < 1 ]] ; then
+    echo "-m [option] requires an integer value >= 1 "
+    exit 1
+fi
+if ! [[ $MAX =~ $INT ]] || [[ $MAX == $MIN ]] ; then
+    echo "-x [option] requires an integer value > -m "
+    exit 1
+fi
+if ! [[ $MAX =~ $INT ]] || [[ $MAX -lt $MIN ]] ; then
+    echo "-x [option] requires an integer value > -m "
+    exit 1
+fi
+
+if [ "$LIST" != "false" ]; then
+LIS=$(readlink -f $LIST)
+fi
+
+#############################################
+echo " ################ Checking for dependencies ########"
+requirements=$(echo "padloc samtools")
+for f in `echo $requirements` 
+do 
+toolCheck=$(type -P $f)
+if [ -z $toolCheck ]; then 
+echo "ERROR: $f missing" 
+echo "Check https://github.com/Emiolalab/extractGenes for required packages"
+exit 1
+else
+echo "$f found"
+fi 
+done
+echo "All required packages found"
+############################################
+cd $WDR
+ODR=$(readlink -f $OUTPUT_DIR)
+mkdir -p $ODR
+
+if [ -z "$(ls -A $ODR)" ]; then
+   echo "Output directory ok"
+else
+   echo "ERROR: Output directory not Empty"
+   exit 1
+fi
+####################
+export INPUT_DIR
+export ODR
+export NUM_THREAD
+export MIN
+export MAX
+export WDR
+export LIST
+if [ "$LIST" != "false" ]; then
+export LIS
+fi
+./pipeline.sh
