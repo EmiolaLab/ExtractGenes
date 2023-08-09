@@ -4,7 +4,8 @@ Many anti-phage genes are located in defense islands. However, there are several
 ## INSTALLATION
 This tool depends on PADLOC (https://github.com/padlocbio/padloc) and Samtools. We recommend installation of dependencies using Bioconda by following the steps below:
 
-##### conda create -n extractGenesTool -c conda-forge -c bioconda -c padlocbio padloc samtools
+    conda create -n extractGenesTool -c conda-forge -c bioconda -c padlocbio padloc samtools
+    
     - # Activate the environment
     conda activate extractGenesTool
     
