@@ -1,5 +1,7 @@
 # Retrieval of uncharacterized proteins between known anti-phage defense genes
-Many anti-phage genes are located in defense islands. However, there are several genes of unknown function present in these regions which likely participate in defense. This tool retrieves uncharacterized proteins located between two known defense proteins or systems. These proteins can be subjected to downstream analysis such as clustering, domain prediction, and protein structure prediction to identify new anti-phage systems. More information can be found in Duan *et al* (2024) "Structure-guided discovery of anti-CRISPR and anti-phage defense proteins." *Nature Communications* (https://www.nature.com/articles/s41467-024-45068-7).
+Many anti-phage genes are located in defense islands. However, there are several genes of unknown function present in these regions which likely participate in defense. This tool retrieves uncharacterized proteins located between two known defense proteins or systems. These proteins can be subjected to downstream analysis such as clustering, domain prediction, and protein structure prediction to identify new anti-phage systems. 
+
+More information can be found in Duan *et al* (2024) "Structure-guided discovery of anti-CRISPR and anti-phage defense proteins." *Nature Communications* (https://www.nature.com/articles/s41467-024-45068-7).
 
 ## INSTALLATION
 This tool depends on PADLOC (https://github.com/padlocbio/padloc) and Samtools. We recommend installation of dependencies using Bioconda by following the steps below:
